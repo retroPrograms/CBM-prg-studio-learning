@@ -11,8 +11,8 @@ PRINT_LINE = $AB1E
 *=$0900
 
 START
-        lda #<HELLOWORLD
-        ldy #>HELLOWORLD
+        lda #0
+        ldy #<cypher
         jsr PRINT_LINE
         rts
         ;jmp START

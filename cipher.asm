@@ -6,22 +6,35 @@
         BYTE    $33, $30, $34, $29, $00, $00, $00
 
 
-PRINT_LINE = $AB1E
+char_out = $FFD2
+cur_key  = $BF       
 
 *=$0900
 
 START
         lda #0
-        ldy #<cypher
-        jsr PRINT_LINE
-        rts
-        ;jmp START
-
-HELLOWORLD
+        ldy 0
+        ldx 0
         
-        byte 13,00  ;cr 0
+dc_loop
+        lda key,y
+        iny
+        cpy #4
+        bne dc_res
+        ldy 0
+dc_res
+        
+        sta cur_key
+        lda cypher,x
+        eor cur_key
+        jsr char_out
+        inx
+        cpx #$FF
+        bne dc_loop
+        rts
 
-key     byte 'g','o','d'  ;67h 6fh 64h
+
+key     byte $67, $6f, $64    ;'g','o','d'  ;67h 6fh 64h
 
 keyRot  byte 3
 

@@ -7,11 +7,13 @@
 
 
 char_out = $FFD2
-cur_key  = $BF       
+cur_key  = $BF 
+CLEAR_SCREEN = $E544      
 
 *=$0900
 
 START
+        jsr CLEAR_SCREEN
         lda #0
         ldy 0
         ldx 0
@@ -19,7 +21,7 @@ START
 dc_loop
         lda key,y
         iny
-        cpy #4
+        cpy #3
         bne dc_res
         ldy 0
 dc_res
@@ -27,9 +29,10 @@ dc_res
         sta cur_key
         lda cypher,x
         eor cur_key
-        jsr char_out
+        sta buffer,x
+        ;jsr char_out
         inx
-        cpx #$FF
+        cpx #$ff
         bne dc_loop
         rts
 
